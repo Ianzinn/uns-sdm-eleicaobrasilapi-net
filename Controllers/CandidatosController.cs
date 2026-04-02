@@ -22,31 +22,55 @@ namespace EleicaoBrasilApi.Controllers
             return Ok(candidatos);
         }
 
+        [HttpGet("partido/{nomeDoPartido}")]
+        public IActionResult GetPorPartido(string nomeDoPartido)
+        {
+            var candidatos = _context.Candidatos
+                .Where(c => c.Partido == nomeDoPartido)
+                .ToList();
+
+            return Ok(candidatos);
+        }
+
         [HttpPost]
         public IActionResult Post(Candidato candidato)
         {
+            if (_context.Candidatos.Any(c => c.Numero == candidato.Numero))
+            {
+                return BadRequest("Número já cadastrado");
+            }
+
             _context.Candidatos.Add(candidato);
             _context.SaveChanges();
+
             return CreatedAtAction(nameof(Get), new { id = candidato.Id }, candidato);
         }
 
-            [HttpPut("{id}")]
-            public IActionResult Put(int id, Candidato candidato)
-            {
-                if (id != candidato.Id)
-                {
-                    return BadRequest();
-                }
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Candidato candidato)
+        {
+            var candidatoExistente = _context.Candidatos.Find(id);
 
-                _context.Candidatos.Update(candidato);
-                _context.SaveChanges();
-                return NoContent();
+            if (candidatoExistente == null)
+            {
+                return NotFound();
             }
-        
+
+            candidatoExistente.Nome = candidato.Nome;
+            candidatoExistente.Numero = candidato.Numero;
+            candidatoExistente.Partido = candidato.Partido;
+            candidatoExistente.ViceNome = candidato.ViceNome;
+
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var candidato = _context.Candidatos.Find(id);
+
             if (candidato == null)
             {
                 return NotFound();
@@ -54,6 +78,7 @@ namespace EleicaoBrasilApi.Controllers
 
             _context.Candidatos.Remove(candidato);
             _context.SaveChanges();
+
             return NoContent();
         }
     }

@@ -7,5 +7,6 @@ namespace EleicaoBrasilApi.models
         public string Nome { get; set; } 
         public string Partido { get; set; }
 
+        public string ViceNome { get; set; } = string.Empty;
     }
 }

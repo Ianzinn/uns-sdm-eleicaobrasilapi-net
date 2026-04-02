@@ -37,3 +37,4 @@
 /Users/ian_santana/Documents/EleicaoBrasilApi/obj/Debug/net10.0/EleicaoBrasilApi.pdb
 /Users/ian_santana/Documents/EleicaoBrasilApi/obj/Debug/net10.0/EleicaoBrasilApi.genruntimeconfig.cache
 /Users/ian_santana/Documents/EleicaoBrasilApi/obj/Debug/net10.0/ref/EleicaoBrasilApi.dll
+/Users/ian_santana/Documents/EleicaoBrasilApi/obj/Debug/net10.0/EleicaoBrasilApi.sourcelink.json
